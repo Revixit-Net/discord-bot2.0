@@ -31,8 +31,8 @@ class Unban(commands.Cog):
                     else:
                         await interaction.response.send_message(f'{ban_user} **данный человек не находится на Discord сервере.**', ephemeral=True)
             else:
-                embedVar = discord.Embed(title="Недостаточно прав!", description="*У вас не достаточно прав на выполнение данной команды.*", color=0xf44336, ephemeral=True)
-                await interaction.response.send_message(embed=embedVar)
+                embedVar = discord.Embed(title="Недостаточно прав!", description="*У вас не достаточно прав на выполнение данной команды.*", color=0xf44336)
+                await interaction.response.send_message(embed=embedVar, ephemeral=True)
         except Exception as ex:
             print(ex)
             await interaction.response.send_message('**Ошибка:** Обратитесь для решения проблемы администратору.', ephemeral=True)

@@ -13,41 +13,52 @@ class Cape(commands.Cog):
     def __init__(self, client):
         self.client = client
 
+    def check_role(self, interaction):
+        guild = discord.utils.get(self.client.guilds, id = config.bot.guild)
+        member = guild.get_member(interaction.user.id)
+        for list_role in member.roles:
+            if list_role.id == config.bot.adminRole:
+                return True
+
     @app_commands.command(name="cape", description="Поменяйте плащ")
     @app_commands.describe(file = "Файл с новым плащом")
     @app_commands.default_permissions(permissions=0)
     async def cape(self, interaction: discord.Integration, file: discord.Attachment):
         if db.connect():
             try:
-                r = db.registered(interaction.user.id)
-                if r[0] and r[1]:
-                    r_getUser = db.getUsernameByDiscordID(interaction.user.id)
-                    if r_getUser[0]:
-                        username = r_getUser[1]['username']
-                        if await scstorage.savecape(username, file.url):
-                            uuid=db.check_uuid(username)[1]["uuid"]
-                            if await aiofiles.os.path.exists(f'{config.web.skindir}/{uuid}.png'):
-                                raw_skin = Image.open(f'{config.web.skindir}/{uuid}.png')
+                if Ban.check_role(self, interaction):
+                    r = db.registered(interaction.user.id)
+                    if r[0] and r[1]:
+                        r_getUser = db.getUsernameByDiscordID(interaction.user.id)
+                        if r_getUser[0]:
+                            username = r_getUser[1]['username']
+                            if await scstorage.savecape(username, file.url):
+                                uuid=db.check_uuid(username)[1]["uuid"]
+                                if await aiofiles.os.path.exists(f'{config.web.skindir}/{uuid}.png'):
+                                    raw_skin = Image.open(f'{config.web.skindir}/{uuid}.png')
+                                else:
+                                    raw_skin = Image.open(config.web.defaultSkin)
+                                w, h = raw_skin.size
+                                embedVar = discord.Embed(title="Успешно!", description="Ваш плащ стал таким.", color=0x00ff09)
+                                #Создание 3D модели
+                                if w <= 64 and h <= 64:
+                                    s = minepi.Skin(raw_skin=raw_skin, raw_cape=Image.open(f'{config.web.capedir}/{uuid}.png'))
+                                    io = BytesIO()
+                                    images = await s.render_skin(hr=180, vrc=0)
+                                    images.save(io, 'PNG')
+                                    io.seek(0)
+                                    im = discord.File(io, 'skin.png')
+                                    embedVar.set_image(url='attachment://skin.png')
+                                    await interaction.response.send_message(embed=embedVar, file=im, ephemeral=True)
+                                else:
+                                    await interaction.response.send_message(embed=embedVar, ephemeral=True)
                             else:
-                                raw_skin = Image.open(config.web.defaultSkin)
-                            w, h = raw_skin.size
-                            embedVar = discord.Embed(title="Успешно!", description="Ваш плащ стал таким.", color=0x00ff09)
-                            #Создание 3D модели
-                            if w <= 64 and h <= 64:
-                                s = minepi.Skin(raw_skin=raw_skin, raw_cape=Image.open(f'{config.web.capedir}/{uuid}.png'))
-                                io = BytesIO()
-                                images = await s.render_skin(hr=180, vrc=0)
-                                images.save(io, 'PNG')
-                                io.seek(0)
-                                im = discord.File(io, 'skin.png')
-                                embedVar.set_image(url='attachment://skin.png')
-                                await interaction.response.send_message(embed=embedVar, file=im, ephemeral=True)
-                            else:
-                                await interaction.response.send_message(embed=embedVar, ephemeral=True)
-                        else:
-                            await interaction.response.send_message('**Ошибка:** Неверный файл плаща', ephemeral=True)
+                                await interaction.response.send_message('**Ошибка:** Неверный файл плаща', ephemeral=True)
+                    else:
+                        await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться', ephemeral=True)
                 else:
-                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться', ephemeral=True) 
+                    embedVar = discord.Embed(title="Недостаточно прав!", description="*У вас не достаточно прав на выполнение данной команды.*", color=0xf44336)
+                    await interaction.response.send_message(embed=embedVar, ephemeral=True)
             except Exception as ex:
                 print(ex)
                 await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}cape [файл плаща]', ephemeral=True)
