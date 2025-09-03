@@ -16,7 +16,7 @@ class Ban(commands.Cog):
             if list_role.id == config.bot.adminRole:
                 return True
 
-    @app_commands.command(name="ban", description="Бант игрока по железу")
+    @app_commands.command(name="ban", description="Бан игрока по железу")
     @app_commands.describe(ban_user = "Ник Discord пользователя которого нужно забанить")
     @app_commands.default_permissions(permissions=0)
     async def ban(self, interaction: discord.Integration, ban_user: app_commands.Range[str, 1, None]):
@@ -27,15 +27,15 @@ class Ban(commands.Cog):
                     member = guild.get_member_named(ban_user)
                     if member != None:
                         db.bane(member.id)
-                        await interaction.response.send_message(f'{ban_user} **успешно забанен по железу.**')
+                        await interaction.response.send_message(f'{ban_user} **успешно забанен по железу.**', ephemeral=True)
                     else:
-                        await interaction.response.send_message(f'{ban_user} **данный человек не находится на Discord сервере.**')
+                        await interaction.response.send_message(f'{ban_user} **данный человек не находится на Discord сервере.**', ephemeral=True)
             else:
-                embedVar = discord.Embed(title="Недостаточно прав!", description="*У вас не достаточно прав на выполнение данной команды.*", color=0xf44336)
+                embedVar = discord.Embed(title="Недостаточно прав!", description="*У вас не достаточно прав на выполнение данной команды.*", color=0xf44336, ephemeral=True)
                 await interaction.response.send_message(embed=embedVar)
         except Exception as ex:
             print(ex)
-            await interaction.response.send_message('**Ошибка:** Обратитесь для решения проблемы администратору.')
+            await interaction.response.send_message('**Ошибка:** Обратитесь для решения проблемы администратору.', ephemeral=True)
         finally:
             db.close()
                 

@@ -31,19 +31,19 @@ class Ban_list(commands.Cog):
                 embedVar.add_field(name=f"Причина:", value=f"{reason}", inline=True)
                 embedVar.add_field(name=f"Свободен через:", value=f"{time}", inline=True)
                 if wheel:
-                    await interaction.response.edit_message(embed=embedVar, view=Ban_list.Button(self.client, page))
+                    await interaction.response.edit_message(embed=embedVar, view=Ban_list.Button(self.client, page), ephemeral=True)
                 else:
-                    await interaction.response.send_message(embed=embedVar, view=Ban_list.Button(self.client, page))
+                    await interaction.response.send_message(embed=embedVar, view=Ban_list.Button(self.client, page), ephemeral=True)
             except Exception as ex:
                 print(ex)
-                await interaction.response.send_message(f'**Ошибка:** Обратитесь для решения проблемы администратору.')
+                await interaction.response.send_message(f'**Ошибка:** Обратитесь для решения проблемы администратору.', ephemeral=True)
             finally:
                 db.close()
 
     @app_commands.command(name="ban-list", description="Список игроков нарушавшие правила")
     @app_commands.default_permissions(permissions=0)
     async def ban_list(self, interaction: discord.Integration):
-        await Ban_list.start_message(self, interaction, wheel=False, page=1)
+        await Ban_list.start_message(self, interaction, wheel=False, page=1, ephemeral=True)
     
     class Button (discord.ui.View):
         def __init__(self, client, page):
@@ -54,12 +54,12 @@ class Ban_list(commands.Cog):
         @discord.ui.button(label='', style=discord.ButtonStyle.grey, emoji='⬅️', custom_id='back')
         async def back(self, interaction: discord.Interaction, button: discord.ui.Button):
             self.page -= 1
-            await Ban_list.start_message(self, interaction, wheel=True, page=self.page)
+            await Ban_list.start_message(self, interaction, wheel=True, page=self.page, ephemeral=True)
 
         @discord.ui.button(label='', style=discord.ButtonStyle.grey, emoji='➡️', custom_id='next')
         async def next(self, interaction: discord.Interaction, button: discord.ui.Button):
             self.page += 1
-            await Ban_list.start_message(self, interaction, wheel=True, page=self.page)
+            await Ban_list.start_message(self, interaction, wheel=True, page=self.page, ephemeral=True)
 
 
 

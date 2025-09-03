@@ -18,7 +18,7 @@ class Link(commands.Cog):
         embedVar.add_field(name="Linux/MacOS",
                        value=f"[Скачать]({config.web.url_launcher_jar})",
                        inline=True)
-        await interaction.response.send_message(embed=embedVar)
+        await interaction.response.send_message(embed=embedVar, ephemeral=True)
 
 async def setup(client):
     await client.add_cog(Link(client))

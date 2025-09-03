@@ -41,16 +41,16 @@ class Cape(commands.Cog):
                                 io.seek(0)
                                 im = discord.File(io, 'skin.png')
                                 embedVar.set_image(url='attachment://skin.png')
-                                await interaction.response.send_message(embed=embedVar, file=im)
+                                await interaction.response.send_message(embed=embedVar, file=im, ephemeral=True)
                             else:
-                                await interaction.response.send_message(embed=embedVar)
+                                await interaction.response.send_message(embed=embedVar, ephemeral=True)
                         else:
-                            await interaction.response.send_message('**Ошибка:** Неверный файл плаща')
+                            await interaction.response.send_message('**Ошибка:** Неверный файл плаща', ephemeral=True)
                 else:
-                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться') 
+                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться', ephemeral=True) 
             except Exception as ex:
                 print(ex)
-                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}cape [файл плаща]')
+                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}cape [файл плаща]', ephemeral=True)
             finally:
                 db.close()
 

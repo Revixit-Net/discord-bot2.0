@@ -14,7 +14,7 @@ class Join_guild(commands.Cog):
 
     @commands.Cog.listener()
     async def on_member_join(self, member):
-        await member.send(view=Join_guild.Batton(), content=f"Приветствую, {member.mention}! Я бот проекта Minecraft. Чтобы попасть на сервер - тебе необходимо зарегистрироваться. \n \n Напиши мне команду **/reg** и создай свой профиль в игре. Полный список моих команд ты можешь узнать, написав команду **/help**.")
+        await member.send(view=Join_guild.Batton(), content=f"Приветствую, {member.mention}! Я бот проекта Revixit. Чтобы попасть на сервер - тебе необходимо зарегистрироваться. \n \n Напиши мне команду **/reg** и создай свой профиль в игре. Полный список моих команд ты можешь узнать, написав команду **/help**.")
 
 async def setup(client):
     await client.add_cog(Join_guild(client))

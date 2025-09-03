@@ -17,7 +17,7 @@ class Store(commands.Cog):
         if wheel:
             await interaction.response.edit_message(embed=embedVar, view=Store.Select(client=self.client))
         else:
-            await interaction.response.send_message(embed=embedVar, view=Store.Select(client=self.client))
+            await interaction.response.send_message(embed=embedVar, view=Store.Select(client=self.client), ephemeral=True)
 
     @app_commands.command(name="store", description="Магазин")
     @app_commands.default_permissions(permissions=0)
@@ -28,10 +28,10 @@ class Store(commands.Cog):
                 if r[0] and r[1]:
                     await Store.start_message(self, interaction, wheel=False)
                 else:
-                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться')
+                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться', ephemeral=True)
             except Exception as ex:
                 print(ex)
-                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}store')
+                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}store', ephemeral=True)
             finally:
                 db.close()
 
@@ -184,7 +184,7 @@ class Store(commands.Cog):
                             await interaction.response.edit_message(embed=embedVar)
                 except Exception as ex:
                     print(ex)
-                    await interaction.response.send_message('**Ошибка:** Неверный синтаксис выдачи')
+                    await interaction.response.send_message('**Ошибка:** Неверный синтаксис выдачи', ephemeral=True)
                 finally:
                     db.close()
 

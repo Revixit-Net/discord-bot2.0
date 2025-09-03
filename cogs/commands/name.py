@@ -18,18 +18,18 @@ class Name(commands.Cog):
                 r = db.registered(interaction.user.id)
                 if r[0] and r[1]:
                     if re.fullmatch(r'[a-z0-9_-]{4,16}', nickname, re.IGNORECASE) == None:
-                        await interaction.response.send_message('В вашем нике использует некорректные символы!')
+                        await interaction.response.send_message('В вашем нике использует некорректные символы!', ephemeral=True)
                         return
                     r_chpass = db.changeUsername(interaction.user.id, nickname)
                     if r_chpass[0]:
-                        await interaction.response.send_message('Псевдоним успешно изменён')
+                        await interaction.response.send_message('Псевдоним успешно изменён', ephemeral=True)
                     elif (not r_chpass[0]) and (r_chpass[1] == '1062'):
-                        await interaction.response.send_message('Ник или пароль уже занят')
+                        await interaction.response.send_message('Ник или пароль уже занят', ephemeral=True)
                 else:
-                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться')
+                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться', ephemeral=True)
             except Exception as ex:
                 print(ex)
-                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}name [новый псевдоним]')
+                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}name [новый псевдоним]', ephemeral=True)
             finally:
                 db.close()
 

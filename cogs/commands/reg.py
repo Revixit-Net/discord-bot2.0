@@ -20,7 +20,7 @@ class Reg(commands.Cog):
             if r[0] and r[1] is None:
                 await interaction.response.send_modal(Reg.Registar())
             else:
-                await interaction.response.send_message('Ты уже зарегистрирован')
+                await interaction.response.send_message('Ты уже зарегистрирован', ephemeral=True)
         db.close()
 
 
@@ -45,12 +45,12 @@ class Reg(commands.Cog):
                         try:
                             birthday = parse(self.birthday.value)
                         except Exception:
-                            await interaction.response.send_message('Вы указали дату не в том формате.')
+                            await interaction.response.send_message('Вы указали дату не в том формате.', ephemeral=True)
                             return
                     else:
                         birthday = None
                     if re.fullmatch(r'[a-z0-9_-]{4,16}', login, re.IGNORECASE) == None:
-                        await interaction.response.send_message('В вашем нике использует некорректные символы!')
+                        await interaction.response.send_message('В вашем нике использует некорректные символы!', ephemeral=True)
                         return
                     r_reg = db.register(interaction.user.id, login, password, birthday)
                     r_promo = db.check_promo(promoCode)
@@ -66,16 +66,16 @@ class Reg(commands.Cog):
                         db.add_money(interaction.user.id, r_promo[1]['value'])
                         db.add_use_promo(promoCode)
                     if r_reg[0]:
-                        embedVar = discord.Embed(title="Вы успешно зарегистрированы!", description="Вам предоставлен доступ на пробный период в 7 дней. Этого времени должно хватить, чтобы вы смогли составить мнение о проекте. По истечении срока мы предложим вам оформить подписку за символическую плату 100 рублей/месяц. Доступ по подписке помогает нам обеспечить адекватную аудиторию на сервере и больше времени уделять его развитию. Надеемся на ваше понимание и желаем вам приятной игры!", color=config.bot.embedColor)
+                        embedVar = discord.Embed(title="Вы успешно зарегистрированы!", description="Желаем вам приятной игры!", color=config.bot.embedColor)
                         embedVar.add_field(name="Ссылки на игровой клиент", value="Он необходим для входа на сервер", inline=False)
                         embedVar.add_field(name="Windows", value=f"[Скачать]({config.web.url_launcher_exe})", inline=True)
                         embedVar.add_field(name="Linux/MacOS", value=f"[Скачать]({config.web.url_launcher_jar})", inline=True)
-                        await interaction.response.send_message(embed=embedVar)
+                        await interaction.response.send_message(embed=embedVar, ephemeral=True)
                     elif (not r[0]) and (r[1] == '1062'):
-                        await interaction.response.send_message('Ник или пароль уже занят')
+                        await interaction.response.send_message('Ник или пароль уже занят', ephemeral=True)
                 except Exception as ex:
                     print(ex)
-                    await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}reg')
+                    await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}reg', ephemeral=True)
                 finally:
                     db.close()
 

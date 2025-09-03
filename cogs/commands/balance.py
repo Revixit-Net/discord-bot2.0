@@ -22,12 +22,12 @@ class Balance(commands.Cog):
                 r = db.registered(interaction.user.id)
                 if r[0] and r[1]:
                     embedVar = discord.Embed(title="Банк", description="Здесь ты можешь узнать остаток на счёте и пополнить его", color=config.bot.embedColor)
-                    await interaction.response.send_message(embed=embedVar, view=Balance.Bank())
+                    await interaction.response.send_message(embed=embedVar, view=Balance.Bank(), ephemeral=True)
                 else:
-                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться')
+                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться', ephemeral=True)
             except Exception as ex:
                 print(ex)
-                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}balance')
+                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}balance', ephemeral=True)
             finally:
                 db.close()
 
@@ -45,7 +45,7 @@ class Balance(commands.Cog):
                         await interaction.response.edit_message(embed=embedVar, view=None)
                 except Exception as ex:
                     print(ex)
-                    await interaction.response.send_message('**Ошибка:** Неверный синтаксис')
+                    await interaction.response.send_message('**Ошибка:** Неверный синтаксис', ephemeral=True)
                 finally:
                     db.close()
 
@@ -69,7 +69,7 @@ class Balance(commands.Cog):
                             },
                             "confirmation": {
                                 "type": "redirect",
-                                "return_url": "https://discord.gg/nvAnn6GVs4"
+                                "return_url": "https://discord.gg/5d8hXneePk"
                             },
                             "capture": True,
                             "description": f"Пополнение баланса на {money} рублей",
@@ -82,14 +82,14 @@ class Balance(commands.Cog):
                             embedVar.add_field(name="Ссылка:", value=f"[Оплатить]({(payment_data['confirmation'])['confirmation_url']})", inline=False)
                             await interaction.response.edit_message(embed=embedVar, view=None)
                         elif (not p[0]):
-                            await interaction.response.send_message('**Ошибка:** Неполадки в платёжной системе.')
+                            await interaction.response.send_message('**Ошибка:** Неполадки в платёжной системе.', ephemeral=True)
                     else:
                         print(f"BAD RETURN {interaction.user.name}")
                         embedVar = discord.Embed(title="Счёт не оплачен", description="Пожалуиста, оплатите счёт, выставленный ранее.", color=0xf44336)
-                        await interaction.response.send_message(embed=embedVar)
+                        await interaction.response.send_message(embed=embedVar, ephemeral=True)
                 except Exception as ex:
                     print(ex)
-                    await interaction.response.send_message('**Ошибка:** Необходимо указать сумму цифрами')
+                    await interaction.response.send_message('**Ошибка:** Необходимо указать сумму цифрами', ephemeral=True)
                 finally:
                     db.close()
 

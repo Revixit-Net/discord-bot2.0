@@ -30,12 +30,12 @@ class Prefix(commands.Cog):
                     except aiomcrcon.RCONConnectionError:
                         with open('temp.txt', 'a') as file:
                             file.write(f'{command} \n')
-                    await interaction.response.send_message('Префикс успешно изменён')
+                    await interaction.response.send_message('Префикс успешно изменён', ephemeral=True)
                 else:
-                    await interaction.response.send_message('**Ошибка:** Вы не приобрели Подписку. Приобрести её можно в /store')
+                    await interaction.response.send_message('**Ошибка:** Вы не приобрели Подписку. Приобрести её можно в /store', ephemeral=True)
             except Exception as ex:
                 print(ex)
-                await interaction.response.send_message('**Ошибка:** Что-то сломалось')
+                await interaction.response.send_message('**Ошибка:** Что-то сломалось', ephemeral=True)
             finally:
                 db.close()
 

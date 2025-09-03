@@ -18,14 +18,14 @@ class Password(commands.Cog):
                 if r[0] and r[1]:
                     r_chpass = db.changePassword(interaction.user.id, new_pass)
                     if r_chpass[0]:
-                        await interaction.response.send_message('Вы успешно изменили пароль')
+                        await interaction.response.send_message('Вы успешно изменили пароль', ephemeral=True)
                     elif (not r_chpass[0]) and (r_chpass[1] == '1062'):
-                        await interaction.response.send_message('Пароль уже используется')
+                        await interaction.response.send_message('Пароль уже используется', ephemeral=True)
                 else:
-                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться')
+                    await interaction.response.send_message('**Ошибка:** Сначала необходимо зарегистрироваться', ephemeral=True)
             except Exception as ex:
                 print(ex)
-                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}password [новый пароль]')
+                await interaction.response.send_message(f'**Ошибка:** Неверный синтаксис\nПравильно: {config.bot.prefix}password [новый пароль]', ephemeral=True)
             finally:
                 db.close()
 
