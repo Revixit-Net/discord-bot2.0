@@ -1,0 +1,9 @@
+/cogs/commands/test.py
+__pycache__
+/temp.txt
+/avatar
+/capes
+/skins
+# Ignore dynaconf secret files
+.secrets.*
+*.old
