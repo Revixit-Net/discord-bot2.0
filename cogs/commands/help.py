@@ -15,7 +15,7 @@ class Help(commands.Cog):
         embedVar.add_field(name=f"{config.bot.prefix}name", value=f"Сменить псевдоним: {config.bot.prefix}name [новый псевдоним]", inline=False)
         embedVar.add_field(name=f"{config.bot.prefix}password", value=f"Сменить пароль: {config.bot.prefix}password [новый пароль]", inline=False)
         embedVar.add_field(name=f"{config.bot.prefix}skin", value=f"Поставить скин: {config.bot.prefix}skin + [файл скина]", inline=False)
-        embedVar.add_field(name=f"{config.bot.prefix}cape", value=f"Поставить плащ: {config.bot.prefix}cape + [файл плаща]", inline=False)
+        #embedVar.add_field(name=f"{config.bot.prefix}cape", value=f"Поставить плащ: {config.bot.prefix}cape + [файл плаща]", inline=False)
         embedVar.add_field(name=f"{config.bot.prefix}links", value="Ссылки на игровой клиент", inline=False)
         #embedVar.add_field(name=f"{config.bot.prefix}store", value="Донатный магазин", inline=False)
         #embedVar.add_field(name=f"{config.bot.prefix}balance", value="Пополнение донатной валюты", inline=False)

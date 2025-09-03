@@ -43,7 +43,7 @@ class Ban_list(commands.Cog):
     @app_commands.command(name="ban-list", description="Список игроков нарушавшие правила")
     @app_commands.default_permissions(permissions=0)
     async def ban_list(self, interaction: discord.Integration):
-        await Ban_list.start_message(self, interaction, wheel=False, page=1, ephemeral=True)
+        await Ban_list.start_message(self, interaction, wheel=False, page=1)
     
     class Button (discord.ui.View):
         def __init__(self, client, page):
@@ -54,12 +54,12 @@ class Ban_list(commands.Cog):
         @discord.ui.button(label='', style=discord.ButtonStyle.grey, emoji='⬅️', custom_id='back')
         async def back(self, interaction: discord.Interaction, button: discord.ui.Button):
             self.page -= 1
-            await Ban_list.start_message(self, interaction, wheel=True, page=self.page, ephemeral=True)
+            await Ban_list.start_message(self, interaction, wheel=True, page=self.page)
 
         @discord.ui.button(label='', style=discord.ButtonStyle.grey, emoji='➡️', custom_id='next')
         async def next(self, interaction: discord.Interaction, button: discord.ui.Button):
             self.page += 1
-            await Ban_list.start_message(self, interaction, wheel=True, page=self.page, ephemeral=True)
+            await Ban_list.start_message(self, interaction, wheel=True, page=self.page)
 
 
 
