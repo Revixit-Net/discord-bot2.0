@@ -29,8 +29,6 @@ class Skin(commands.Cog):
                             caprDir = config.web.capedir
                             if await aiofiles.os.path.exists(f'{caprDir}/{uuid}.png'):
                                 raw_cape = Image.open(f'{caprDir}/{uuid}.png')
-                            else:
-                                raw_cape = Image.open(config.web.defaultCape)
                             raw_skin = Image.open(f'{skinDir}/{uuid}.png')
                             w, h = raw_skin.size
                             embedVar = discord.Embed(title="Успешно!", description="Ваш скин стал таким.", color=0x00ff09)

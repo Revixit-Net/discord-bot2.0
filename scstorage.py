@@ -115,8 +115,6 @@ class API:
 
         if await aiofiles.os.path.exists(linkCape):
             za_cape['digest'] = hashlib.sha256(open(linkCape, 'rb').read()).hexdigest()
-        else:
-            za_cape['digest'] = hashlib.sha256(open(config.web.defaultCape, 'rb').read()).hexdigest()
         return {'SKIN':za_skin, 'CAPE':za_cape}
     
     @app.get('/storage/skin')

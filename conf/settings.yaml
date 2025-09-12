@@ -26,6 +26,5 @@ web:
   port: 8123
   defaultAvatar: ./defaults/avatar.png
   defaultSkin: ./defaults/skin.png
-  defaultCape: ./defaults/cape.png
   url_launcher_exe: http://localhost:9274/Launcher.exe
   url_launcher_jar: http://localhost:9274/Launcher.jar
