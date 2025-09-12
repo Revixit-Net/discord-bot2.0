@@ -13,7 +13,6 @@ class Reg(commands.Cog):
         self.client = client
 
     @app_commands.command(name="reg", description="Регистрация")
-    @app_commands.default_permissions(permissions=0)
     async def reg(self, interaction: discord.Integration):
         if db.connect():
             r = db.getUsernameByDiscordID(interaction.user.id)

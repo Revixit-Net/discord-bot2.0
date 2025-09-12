@@ -133,8 +133,8 @@ class API:
         if await aiofiles.os.path.exists(link):
             return FileResponse(link)
         else:
-            return FileResponse(config.web.defaultCape)
-        
+            return NULL
+
     @app.get('/storage/avatar')
     async def storage(uuid:str):
         link = f'{config.web.avatardir}/{uuid}.png'

@@ -11,7 +11,6 @@ class Name(commands.Cog):
 
     @app_commands.command(name="name", description="Изменить псевдоним")
     @app_commands.describe(nickname = "Введите новый псевдоним")
-    @app_commands.default_permissions(permissions=0)
     async def name(self, interaction: discord.Integration, nickname:app_commands.Range[str, 4, 16]):
         if db.connect():
             try:

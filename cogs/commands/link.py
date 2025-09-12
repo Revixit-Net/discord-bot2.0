@@ -9,7 +9,6 @@ class Link(commands.Cog):
         self.client = client
 
     @app_commands.command(name="links", description="Ссылки на скачку игрового клиента")
-    @app_commands.default_permissions(permissions=0)
     async def links(self, interaction: discord.Integration):
         embedVar = discord.Embed(title="Лаунчер", description="Выберите свою операционную систему", color=config.bot.embedColor)
         embedVar.add_field(name="Windows",

@@ -15,7 +15,6 @@ class Skin(commands.Cog):
 
     @app_commands.command(name="skin", description="Поменяйте внешний вид персонажа")
     @app_commands.describe(file = "Файл с своим новым скином")
-    @app_commands.default_permissions(permissions=0)
     async def skin(self, interaction: discord.Integration, file: discord.Attachment):
         if db.connect():
             try:

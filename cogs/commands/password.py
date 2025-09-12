@@ -10,7 +10,6 @@ class Password(commands.Cog):
 
     @app_commands.command(name="password", description="Поменять пароль")
     @app_commands.describe(new_pass = "Введите новый пароль")
-    @app_commands.default_permissions(permissions=0)
     async def password(self, interaction: discord.Integration, new_pass: app_commands.Range[str, 5, 20]):
         if db.connect():
             try:
